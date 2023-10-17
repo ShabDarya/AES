@@ -1,0 +1,24 @@
+﻿<Window x:Class="WpfApp1.Practica"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Выбор практических заданий" Height="450" Width="500">
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Название:"/>
+                <TextBlock Text="{Binding NameP}" MinWidth="70"/>
+                <Button Content="ВЫБРАТЬ" Command="{Binding Path=PrCommand}" HorizontalAlignment="Right" Width="70"/>
+            </StackPanel>
+            <DataGrid x:Name="dataGridLog" ItemsSource="{Binding PrList}" AutoGenerateColumns="False" IsReadOnly="True" Width="500" SelectedItem="{Binding Path=SelectP, Mode=TwoWay}" HorizontalAlignment="Left">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="№" Width="0.5*" Binding="{Binding Path=IdPr}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>

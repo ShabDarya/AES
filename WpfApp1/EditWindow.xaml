@@ -1,0 +1,226 @@
+﻿<Window x:Class="WpfApp1.EditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Изменение БД" Height="450" Width="800">
+    <Grid>
+        
+        <TabControl>
+            <TabItem Header="Пользователи">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Логин"/>
+                        <TextBox Text="{Binding LoginU}" Width="100"/>
+                        <Label Content="Пароль"/>
+                        <TextBox Text="{Binding PasswordU}" Width="100"/>
+                        <Label Content="Тип пользователя:"/>
+                        <ComboBox ItemsSource="{Binding TypeUserList}"  DisplayMemberPath="Type" SelectedItem="{Binding CurrentType, Mode=TwoWay}" Width="100" Margin="0,0,5,0" />
+                        <Button Content="ДОБАВИТЬ" Command="{Binding Path=AddUserCommand}" HorizontalAlignment="Right" Width="70" Margin="0,0,5,0"/>
+                        <Button Content="ИЗМЕНИТЬ" Command="{Binding Path=EditUserCommand}" HorizontalAlignment="Right" Width="70" Margin="0,0,5,0"/>
+                        <Button Content="УДАЛИТЬ" Command="{Binding Path=DeleteUserCommand}" HorizontalAlignment="Right" Width="70"/>
+                    </StackPanel>
+                    <DataGrid x:Name="dataGridLog" ItemsSource="{Binding UserList}" AutoGenerateColumns="False" IsReadOnly="True" Width="800" SelectedItem="{Binding Path=SelectUser, Mode=TwoWay}" HorizontalAlignment="Left" Margin="0,10,0,0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Логин" Width="*" Binding="{Binding Path=Login}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Пароль" Width="*" Binding="{Binding Path=Password}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Тип" Width="*" Binding="{Binding Path=Role}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </StackPanel>
+                    </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Роботы">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <Label Content="Название:"/>
+                            <TextBox Text="{Binding NameR}" Width="100"/>
+                            <Label Content="Механизм:"/>
+                            <ComboBox ItemsSource="{Binding TypeMechanismList}" SelectedItem="{Binding CurrentTypeM, Mode=TwoWay}" Width="100" Margin="0,0,5,0" />
+                            <Label Content="Грузоподъемность, кг"/>
+                            <TextBox Text="{Binding GR}" Width="100"/>
+                            <Label Content="Степень подвижности"/>
+                            <TextBox Text="{Binding NR}" Width="90"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <Label Content="Рабочее давнение воздуха, МПа:"/>
+                            <TextBox Text="{Binding PR}" Width="100"/>
+                            <Label Content="Погрешность, мм:"/>
+                            <TextBox Text="{Binding DeltaR}" Width="100"/>
+                            <Label Content="Макс. УП ротации, град"/>
+                            <TextBox Text="{Binding R_cR}" Width="100"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <Label Content="Макс. УП сгиба, град:"/>
+                            <TextBox Text="{Binding R_sR}" Width="100"/>
+                            <Label Content="Макс. УП поворота, град:"/>
+                            <TextBox Text="{Binding R_pR}" Width="100"/>
+                            <Label Content="Макс. верт. перемещение, мм"/>
+                            <TextBox Text="{Binding L_vR}" Width="100"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <Label Content="Макс. гор. перемещение, мм:"/>
+                            <TextBox Text="{Binding L_hR}" Width="100"/>
+                            <Label Content="Масса стойки управления, кг:"/>
+                            <TextBox Text="{Binding W_sR}" Width="100"/>
+                            <Label Content="Масса манипулятора, кг:"/>
+                            <TextBox Text="{Binding W_mR}" Width="100"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,1">
+                            <Button Content="ДОБАВИТЬ" Command="{Binding Path=AddRobotCommand}" HorizontalAlignment="Right" Width="260" Margin="0,0,5,0"/>
+                            <Button Content="ИЗМЕНИТЬ" Command="{Binding Path=EditRobotCommand}" HorizontalAlignment="Right" Width="260" Margin="0,0,5,0"/>
+                            <Button Content="УДАЛИТЬ" Command="{Binding Path=DeleteRobotCommand}" HorizontalAlignment="Right" Width="260"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding RobotList}" AutoGenerateColumns="False" IsReadOnly="True" Width="800" SelectedItem="{Binding Path=SelectR, Mode=TwoWay}" HorizontalAlignment="Left">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="№" Width="0.5*" Binding="{Binding Path=Id}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Механизм" Width="*" Binding="{Binding Path=Mechanism}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Грузоподъемность, кг" Width="*" Binding="{Binding Path=G}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Степени подвижности" Width="*" Binding="{Binding Path=N}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Рабочее давнение воздуха, МПа" Width="*" Binding="{Binding Path=P}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Погрешность, мм" Width="*" Binding="{Binding Path=Delta}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Макс. УП ротации, град" Width="*" Binding="{Binding Path=R_c}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Макс. УП сгиба, град" Width="*" Binding="{Binding Path=R_s}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Макс. УП поворота, град" Width="*" Binding="{Binding Path=R_p}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Макс. верт. перемещение, мм" Width="*" Binding="{Binding Path=L_v}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Макс. гор. перемещение, мм" Width="*" Binding="{Binding Path=L_h}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Масса стойки управления, кг" Width="*" Binding="{Binding Path=W_s}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Масса манипулятора, кг" Width="*" Binding="{Binding Path=W_m}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Тесты">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <StackPanel>
+                                <Label Content="Вопрос:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <TextBox Text="{Binding NameQ}" Height="25"/>
+                                <Button Content="ДОБАВИТЬ" Command="{Binding Path=AddQuestionCommand}" Height="25" Margin="0,3,0,0"/>
+                                <Button Content="ИЗМЕНИТЬ" Command="{Binding Path=EditQuestionCommand}" Height="25" Margin="0,3,0,3"/>
+                                <Button Content="УДАЛИТЬ" Command="{Binding Path=DeleteQuestionCommand}" Height="25"/>
+                            </StackPanel>
+                            <DataGrid ItemsSource="{Binding QuestionsList}" AutoGenerateColumns="False" IsReadOnly="True" Width="400" SelectedItem="{Binding Path=SelectQ, Mode=TwoWay}" HorizontalAlignment="Left">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="№" Width="*" Binding="{Binding Path=Id}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Вопрос"  Width="8*" Binding="{Binding Path=Name}"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                        <StackPanel>
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Column="0" Content="Ответ:" HorizontalAlignment="Center"/>
+                                    <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding NameA}" Height="25"/>
+                                    <Label Grid.Column="1" Content="Правильный:" HorizontalAlignment="Center"/>
+                                    <CheckBox Grid.Column="1" Grid.Row="1" IsChecked="{Binding IsRightA}" Height="25" HorizontalAlignment="Center"/>
+                                </Grid>
+                            </StackPanel>
+                            <Button Content="ДОБАВИТЬ" Command="{Binding Path=AddAnswerCommand}" Height="25" Margin="0,3,0,0"/>
+                            <Button Content="ИЗМЕНИТЬ" Command="{Binding Path=EditAnswerCommand}" Height="25" Margin="0,3,0,3"/>
+                            <Button Content="УДАЛИТЬ" Command="{Binding Path=DeleteAnswerCommand}" Height="25"/>
+                            <DataGrid ItemsSource="{Binding AnswersList}" AutoGenerateColumns="False" IsReadOnly="True" Width="390" SelectedItem="{Binding Path=SelectA, Mode=TwoWay}" HorizontalAlignment="Left">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="№" Width="*" Binding="{Binding Path=Id}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Ответ" Width="6*" Binding="{Binding Path=Name}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="✓" Width="*" Binding="{Binding Path=IsRight}"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Практические занятия">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Название"/>
+                            <TextBox Text="{Binding NamePractica}" Width="100"/>
+                            <Label Content="Коорд. колбы"/>
+                            <TextBox Text="{Binding ColbaX}" Width="100"/>
+                            <Label Content="Коорд. ленты"/>
+                            <TextBox Text="{Binding ConvX}" Width="100"/>
+                            <Button Content="ДОБАВИТЬ" Command="{Binding Path=AddPracticaCommand}" HorizontalAlignment="Right" Width="70" Margin="0,0,5,0"/>
+                            <Button Content="ИЗМЕНИТЬ" Command="{Binding Path=EditPracticaCommand}" HorizontalAlignment="Right" Width="70" Margin="0,0,5,0"/>
+                            <Button Content="УДАЛИТЬ" Command="{Binding Path=DeletePracticaCommand}" HorizontalAlignment="Right" Width="70"/>
+                        </StackPanel>
+                        <DataGrid x:Name="dataGridPract" ItemsSource="{Binding PracticaList}" MinWidth="790" AutoGenerateColumns="False" IsReadOnly="True"  SelectedItem="{Binding Path=SelectPractica, Mode=TwoWay}" HorizontalAlignment="Left" Margin="0,10,0,0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Номер" MinWidth="50" Binding="{Binding Path=IdPr}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Название" MinWidth="100" Binding="{Binding Path=Name}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Координата колбы, мм" MinWidth="100" Binding="{Binding Path=Colba}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Координана конвейерной ленты, мм" MinWidth="100" Binding="{Binding Path=Conv}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Статистика">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Grid.Column="1" Content="Прошел тестирование:" />
+                        <CheckBox Grid.Column="1" Grid.Row="1" IsChecked="{Binding IsRightS}" VerticalAlignment="Center" />
+                        <Button Content="ИЗМЕНИТЬ" Command="{Binding Path=EditStatCommand}" Width="100" Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <DataGrid ItemsSource="{Binding StatisitcsList}" AutoGenerateColumns="False" IsReadOnly="True" Width="790" SelectedItem="{Binding Path=SelectStat, Mode=TwoWay}" HorizontalAlignment="Center">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Cтудент" Width="3*" Binding="{Binding Path=Login}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Процент решения"  Width="*" Binding="{Binding Path=Percent}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+                    </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Протоколы обучения">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <DataGrid ItemsSource="{Binding ProtocolList}" AutoGenerateColumns="False" IsReadOnly="True" Width="790" HorizontalAlignment="Center">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Cтудент" Width="*" Binding="{Binding Path=Login}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Зачет теста"  Width="*" Binding="{Binding Path=ReadyTest}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Номер практического задания"  Width="*" Binding="{Binding Path=IdPractica}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Зачет практического задания"  Width="*" Binding="{Binding Path=ReadyPr}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Методический материал">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Текст"/>
+                            <TextBox Text="{Binding NameMO}" Width="400"/>
+                            <Button Content="ДОБАВИТЬ" Command="{Binding Path=AddMOCommand}" HorizontalAlignment="Right" Width="70" Margin="0,0,5,0"/>
+                            <Button Content="ИЗМЕНИТЬ" Command="{Binding Path=EditMOCommand}" HorizontalAlignment="Right" Width="70" Margin="0,0,5,0"/>
+                            <Button Content="УДАЛИТЬ" Command="{Binding Path=DeleteMOCommand}" HorizontalAlignment="Right" Width="70"/>
+                        </StackPanel>
+                        <DataGrid x:Name="dataGridMO" ItemsSource="{Binding MOList}" AutoGenerateColumns="False" IsReadOnly="True" Width="800" SelectedItem="{Binding Path=SelectMO, Mode=TwoWay}" HorizontalAlignment="Left" Margin="0,10,0,0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Номер" Width="*" Binding="{Binding Path=Id}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Название" Width="5*" Binding="{Binding Path=Name}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
